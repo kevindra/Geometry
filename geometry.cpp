@@ -50,7 +50,6 @@ double dist( point p1, point p2 ) {
   return sqrt( a*a + b*b );
 }
 
-
 /**
   * @func sdist
   * @params p1,p2: two points
@@ -62,51 +61,16 @@ double sdist( point p1, point p2 ) {
   return ( a*a + b*b );
 }
 
+/**
+  * @func getVector
+  * @params a,b: two points.
+  * @returns vector passing through points a,b.
+  */
 point getVector( point a, point b ) {
   point p;
   p.x = b.x - a.x;
   p.y = b.y - a.y;
   return p;
-}
-
-/**
-  * @func distLinePoint
-  * @params a,b two points on the line
-  * @params c point from which distance is being calculated
-  */
-double distLinePoint( point a, point b, point c, bool isSegment) {
-  point AB,AC;
-  AB  = getVector(a,b);
-  AC  = getVector(a,c);
-
-  if( isSegment ) {
-    point BA = getVector(b,a);
-    int dot1  = dot(BA,AC);
-    point BC = getVector(b,c);
-    int dot2  = dot(AB,BC);
-
-    if( dot1 > 0 ) return dist(b,c);  //if point is in rightside of segment
-    if( dot2 > 0 ) return dist(c,a);  //if point is in leftside of segment
-  }
-
-  //in all other cases.
-  return cross(AB,AC) / mag(AB);
-}
-
-/**
-  * @func polyArea
-  * @params vector of points 
-  * @returns area of polygon using cross product
-  */
-double polyArea( vector<point> p ) {
-  double area = 0.0;
-  for(int i=0; i+2 < p.size(); i++) {
-    point a = p[i], b = p[i+1], c = p[i+2];
-    point ab = getVector(a,b);
-    point bc = getVector(b,c);
-    area += cross(ab, bc);
-  }
-  return area/2.0;
 }
 
 int main () {
@@ -116,8 +80,8 @@ int main () {
 
   vector<point> p(3);
   p[0] = p1, p[1] = p2, p[2] = p3;
-
+  
   //cout << distLinePoint(p1,p2,p3,true) <<endl;
-  cout << polyArea(p) <<endl;
+  cout << dist(p[0], p[2]) <<endl;
   return 0;
 }
